@@ -1,21 +1,27 @@
 import { useState } from 'react'
 import blogService from '../services/blogs'
 
-const BlogForm = ({ blogs, setBlogs }) => {
+const BlogForm = ({ blogs, setBlogs, showNotification }) => {
   const [title, setTitle] = useState('')
   const [author, setAuthor] = useState('')
   const [url, setUrl] = useState('')
 
-
   const handlePost = async (event) => {
+    event.preventDefault()
     const sendThisBlog = { title:title, author:author, url:url }
-    const newBlog = await blogService.create( sendThisBlog )
-    setBlogs(blogs.concat(newBlog))
+    try{
+      const newBlog = await blogService.create( sendThisBlog )
+      setBlogs(blogs.concat(newBlog))
+      showNotification(`a new blog ${title} by author ${author} added`, 'green')
+    } catch { (exception) => {
+      showNotification('error in posting blog! fix error handling', 'red')
+    }
+    }
   }
 
   return(
     <div>
-      <h2>Log in to application</h2>
+      <h2>Create new</h2>
 
       <form onSubmit={handlePost}>
         <div>

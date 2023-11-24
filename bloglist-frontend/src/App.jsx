@@ -11,7 +11,8 @@ const App = () => {
   const [user, setUser] = useState(null)
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
-  const [errorMessage, setErrorMessage] = useState(null)
+  const [notification, setNotification] = useState(null)
+  const [notificationColor, setNotificationColor] =useState('red')
 
   useEffect(() => {
     blogService.getAll().then(blogs =>
@@ -28,6 +29,14 @@ const App = () => {
     }
   }, [])
 
+  const showNotification = (notificationText, color) => {
+    setNotification(notificationText)
+    setNotificationColor(color)
+    setTimeout(() => {
+      setNotification(null)
+    }, 5000)
+  }
+
   const handleLogout = (event) => window.localStorage.removeItem('loggedBloglistUser')
 
   const handleLogin = async (event) => {
@@ -40,20 +49,17 @@ const App = () => {
       setUsername('')
       setPassword('')
     } catch (exception) {
-      setErrorMessage('Wrong credentials')
-      setTimeout(() => {
-        setErrorMessage(null)
-      }, 5000)
+      showNotification('Wrong credentials', 'red')
     }
   }
 
   return (
 
     <div>
-      {errorMessage ? <Notification message={errorMessage} color='red'/> : null}
+      {notification && <Notification message={notification} color={notificationColor}/> }
       {!user && <LoginForm handleLogin={handleLogin} username={username} setUsername={setUsername} password={password} setPassword={setPassword}/> }
       {user && <p>{user.name} logged in <button onClick={handleLogout}>log out</button></p> }
-      {user && <BlogForm blogs={blogs} setBlogs={setBlogs}/>}
+      {user && <BlogForm blogs={blogs} setBlogs={setBlogs} showNotification={showNotification}/>}
       {user && <Blogs blogs={blogs}/> }
     </div>
 
