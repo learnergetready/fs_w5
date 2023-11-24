@@ -12,7 +12,7 @@ const App = () => {
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
   const [notification, setNotification] = useState(null)
-  const [notificationColor, setNotificationColor] =useState('red')
+  const [notificationColor, setNotificationColor] = useState('red')
 
   useEffect(() => {
     blogService.getAll().then(blogs =>
@@ -59,7 +59,7 @@ const App = () => {
       {notification && <Notification message={notification} color={notificationColor}/> }
       {!user && <LoginForm handleLogin={handleLogin} username={username} setUsername={setUsername} password={password} setPassword={setPassword}/> }
       {user && <p>{user.name} logged in <button onClick={handleLogout}>log out</button></p> }
-      {user && <BlogForm blogs={blogs} setBlogs={setBlogs} showNotification={showNotification}/>}
+      {user && <BlogForm blogs={blogs} setBlogs={setBlogs} showNotification={showNotification} />}
       {user && <Blogs blogs={blogs}/> }
     </div>
 
