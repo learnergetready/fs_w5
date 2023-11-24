@@ -4,6 +4,7 @@ import blogService from './services/blogs'
 import loginService from './services/login'
 import Notification from './components/Notification'
 import LoginForm from './components/LoginForm'
+import BlogForm from './components/BlogForm'
 
 const App = () => {
   const [blogs, setBlogs] = useState([])
@@ -52,6 +53,7 @@ const App = () => {
       {errorMessage ? <Notification message={errorMessage} color='red'/> : null}
       {!user && <LoginForm handleLogin={handleLogin} username={username} setUsername={setUsername} password={password} setPassword={setPassword}/> }
       {user && <p>{user.name} logged in <button onClick={handleLogout}>log out</button></p> }
+      {user && <BlogForm blogs={blogs} setBlogs={setBlogs}/>}
       {user && <Blogs blogs={blogs}/> }
     </div>
 
