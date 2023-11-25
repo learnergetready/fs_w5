@@ -12,7 +12,7 @@ const App = () => {
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
   const [notification, setNotification] = useState(null)
-  const [notificationColor, setNotificationColor] = useState('red')
+  const [notificationColor, setNotificationColor] = useState(null)
 
   useEffect(() => {
     blogService.getAll().then(blogs =>
@@ -31,9 +31,12 @@ const App = () => {
 
   const showNotification = (notificationText, color) => {
     setNotification(notificationText)
-    setNotificationColor(color)
+    setNotificationColor(color || 'red')
     setTimeout(() => {
       setNotification(null)
+    }, 5000)
+    setTimeout(() => {
+      setNotificationColor(null)
     }, 5000)
   }
 
@@ -65,7 +68,7 @@ const App = () => {
       setUsername('')
       setPassword('')
     } catch (exception) {
-      showNotification('Wrong credentials', 'red')
+      showNotification('Wrong credentials')
     }
   }
 
@@ -84,5 +87,4 @@ const App = () => {
 
   )
 }
-/*{<Blog key={blog.id} blog={blog} updateBlog={updateBlog} username={user.username} removeBlog={removeBlog} />}*/
 export default App

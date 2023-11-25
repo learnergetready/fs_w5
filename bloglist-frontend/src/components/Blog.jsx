@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import PropTypes from 'prop-types'
 
 const Blog = ({ blog, updateBlog, username, removeBlog }) => {
   const [showMuch, setShowMuch] = useState(false)
@@ -49,5 +50,12 @@ const Blog = ({ blog, updateBlog, username, removeBlog }) => {
       <button style={buttonStyle} onClick={() => setShowMuch(true)}>view</button>
     </div>
   )}
+
+Blog.propTypes = {
+  blog: PropTypes.object.isRequired,
+  updateBlog: PropTypes.func.isRequired,
+  username: PropTypes.string.isRequired,
+  removeBlog: PropTypes.func.isRequired
+}
 
 export default Blog

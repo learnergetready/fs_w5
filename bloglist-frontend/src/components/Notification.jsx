@@ -1,4 +1,10 @@
-const Notification = ({ message, color='green' }) => {
+import PropTypes from 'prop-types'
+
+const Notification = ({ message, color }) => {
+
+  if(!color) {
+    color = 'red'
+  }
 
   const notificationStyle = {
     color:color,
@@ -19,6 +25,11 @@ const Notification = ({ message, color='green' }) => {
       {message}
     </div>
   )
+}
+
+Notification.propTypes = {
+  message: PropTypes.string.isRequired,
+  color: PropTypes.string
 }
 
 export default Notification
