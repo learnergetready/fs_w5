@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import Blogs from './components/Blogs'
+import Blog from './components/Blog'
 import blogService from './services/blogs'
 import loginService from './services/login'
 import Notification from './components/Notification'
@@ -39,6 +39,7 @@ const App = () => {
 
   const addBlog = async (blog) => {
     const newBlog = await blogService.create( blog )
+    newBlog.user = { ...user }
     setBlogs(blogs.concat(newBlog))
   }
 
@@ -65,7 +66,9 @@ const App = () => {
       {!user && <LoginForm handleLogin={handleLogin} username={username} setUsername={setUsername} password={password} setPassword={setPassword}/> }
       {user && <p>{user.name} logged in <button onClick={handleLogout}>log out</button></p> }
       {user && <BlogForm sendBlog={addBlog} showNotification={showNotification} />}
-      {user && <Blogs blogs={blogs}/> }
+      <div>
+        {user && blogs.map(blog => <Blog key={blog.id} blog={blog} />) }
+      </div>
     </div>
 
   )
