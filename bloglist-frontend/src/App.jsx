@@ -72,7 +72,7 @@ const App = () => {
       {user && <p>{user.name} logged in <button onClick={handleLogout}>log out</button></p> }
       {user && <BlogForm sendBlog={addBlog} showNotification={showNotification} />}
       <div>
-        {user && blogs.map(blog => <Blog key={blog.id} blog={blog} updateBlog={updateBlog} />) }
+        {user && blogs.sort((a, b) => b.likes - a.likes).map(blog => <Blog key={blog.id} blog={blog} updateBlog={updateBlog} />) }
       </div>
     </div>
 
