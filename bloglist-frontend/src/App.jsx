@@ -37,6 +37,11 @@ const App = () => {
     }, 5000)
   }
 
+  const addBlog = async (blog) => {
+    const newBlog = await blogService.create( blog )
+    setBlogs(blogs.concat(newBlog))
+  }
+
   const handleLogout = (event) => window.localStorage.removeItem('loggedBloglistUser')
 
   const handleLogin = async (event) => {
@@ -59,7 +64,7 @@ const App = () => {
       {notification && <Notification message={notification} color={notificationColor}/> }
       {!user && <LoginForm handleLogin={handleLogin} username={username} setUsername={setUsername} password={password} setPassword={setPassword}/> }
       {user && <p>{user.name} logged in <button onClick={handleLogout}>log out</button></p> }
-      {user && <BlogForm blogs={blogs} setBlogs={setBlogs} showNotification={showNotification} />}
+      {user && <BlogForm sendBlog={addBlog} showNotification={showNotification} />}
       {user && <Blogs blogs={blogs}/> }
     </div>
 

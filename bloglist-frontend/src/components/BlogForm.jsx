@@ -1,7 +1,6 @@
 import { useState } from 'react'
-import blogService from '../services/blogs'
 
-const BlogForm = ({ blogs, setBlogs, showNotification }) => {
+const BlogForm = ({ sendBlog, showNotification }) => {
   const [title, setTitle] = useState('')
   const [author, setAuthor] = useState('')
   const [url, setUrl] = useState('')
@@ -10,14 +9,15 @@ const BlogForm = ({ blogs, setBlogs, showNotification }) => {
   const showWhenVisible = { display: visiblePost ? '' : 'none' }
   const hideWhenVisible = { display: visiblePost ? 'none' : '' }
 
-  const handlePost = async (event) => {
+  const addBlog = async (event) => {
     event.preventDefault()
-    const sendThisBlog = { title:title, author:author, url:url }
     try{
-      const newBlog = await blogService.create( sendThisBlog )
-      setBlogs(blogs.concat(newBlog))
-      showNotification(`a new blog ${title} by author ${author} added`, 'green')
+      await sendBlog( { title:title, author:author, url:url } )
+      showNotification(`a new blog ${title} by author ${author} was added`, 'green')
       setVisiblePost(false)
+      setTitle('')
+      setAuthor('')
+      setUrl('')
     } catch { (exception) => {
       showNotification('error in posting blog! fix error handling', 'red')
     }
@@ -30,7 +30,7 @@ const BlogForm = ({ blogs, setBlogs, showNotification }) => {
       <div style={showWhenVisible}>
         <h2>Create new</h2>
 
-        <form onSubmit={handlePost}>
+        <form onSubmit={addBlog}>
           <div>
               title
             <input
