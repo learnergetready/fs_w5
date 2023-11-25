@@ -1,6 +1,6 @@
 import { useState } from 'react'
 
-const Blog = ({ blog, updateBlog }) => {
+const Blog = ({ blog, updateBlog, username, removeBlog }) => {
   const [showMuch, setShowMuch] = useState(false)
   const bigBlogStyle = {
     borderStyle: 'solid',
@@ -23,6 +23,11 @@ const Blog = ({ blog, updateBlog }) => {
     updateBlog(likedBlog)
   }
 
+  const handleRemove = (event) => {
+    event.preventDefault()
+    window.confirm(`Remove blog ${blog.title} by ${blog.author}`,removeBlog(blog.id))
+  }
+
   if(showMuch) {
     return(
       <div style={bigBlogStyle}>
@@ -32,7 +37,8 @@ const Blog = ({ blog, updateBlog }) => {
         url: {blog.url}<br/>
         likes: {blog.likes}
         <button style={buttonStyle} onClick={handleLike}>like</button><br/>
-        added by: {blog.user.name}
+        added by: {blog.user.name}<br/>
+        {username === blog.user.username && <button onClick={handleRemove}>remove</button>}
       </div>
     )
   }
