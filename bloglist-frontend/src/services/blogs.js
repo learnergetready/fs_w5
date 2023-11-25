@@ -22,4 +22,11 @@ const create = async ( newBlog ) => {
   return response.data
 }
 
-export default { setToken, getAll, create }
+const update = async ( updatedBlog ) => {
+  const formatedBlog = { ...updatedBlog, user: updatedBlog.user.id }
+  delete formatedBlog.id
+  const response = await axios.put(`${baseUrl}/${updatedBlog.id.toString()}`, formatedBlog)
+  return response.data
+}
+
+export default { setToken, getAll, create, update }

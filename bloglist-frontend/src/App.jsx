@@ -43,6 +43,11 @@ const App = () => {
     setBlogs(blogs.concat(newBlog))
   }
 
+  const updateBlog = async (updatedBlog) => {
+    await blogService.update(updatedBlog)
+    setBlogs(blogs.map(blog => blog.id !== updatedBlog.id ? blog : updatedBlog ))
+  }
+
   const handleLogout = (event) => window.localStorage.removeItem('loggedBloglistUser')
 
   const handleLogin = async (event) => {
@@ -67,7 +72,7 @@ const App = () => {
       {user && <p>{user.name} logged in <button onClick={handleLogout}>log out</button></p> }
       {user && <BlogForm sendBlog={addBlog} showNotification={showNotification} />}
       <div>
-        {user && blogs.map(blog => <Blog key={blog.id} blog={blog} />) }
+        {user && blogs.map(blog => <Blog key={blog.id} blog={blog} updateBlog={updateBlog} />) }
       </div>
     </div>
 

@@ -20,7 +20,7 @@ blogsRouter.delete('/:id', async (request, response) => {
   const blogToDelete = await Blog.findById({ _id: request.params.id })
 
   if(blogToDelete.user.toString() !== request.user) {
-    return response.status(401).json({ error: 'only user, who added the blog, can remove the blog' })
+    return response.status(401).json({ error: 'only the user, who added the blog, can remove the blog' })
   }
 
   await Blog.deleteOne({ _id:request.params.id })
@@ -51,9 +51,10 @@ blogsRouter.post('/', async (request, response) => {
   response.status(201).json(savedBlog)
 })
 
-blogsRouter.patch('/:id', async (request, response) => {
-  const blogNow = await Blog.findByIdAndUpdate(request.params.id, request.body)
-  response.json(blogNow)
+blogsRouter.put('/:id', async (request, response) => {
+  const incomingBlog = request.body
+  await Blog.findByIdAndUpdate(request.params.id, incomingBlog)
+  response.status(200).end()
 })
 
 module.exports = blogsRouter
