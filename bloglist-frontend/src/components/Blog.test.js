@@ -20,10 +20,11 @@ describe('Blog', () => {
     }
   }
 
-  const mockHandler = jest.fn()
+  const mockHandleUpdate = jest.fn()
+  const mockHandleRemove = jest.fn()
 
   beforeEach(() => {
-    container = render(<Blog blog={blog} updateBlog={mockHandler} username={tester_username} removeBlog={mockHandler} />).container
+    container = render(<Blog blog={blog} updateBlog={mockHandleUpdate} username={tester_username} removeBlog={mockHandleRemove} />).container
   })
 
   test('renders content', () => {
@@ -46,5 +47,17 @@ describe('Blog', () => {
     expect(p).toHaveTextContent(blog.url)
     expect(p).toHaveTextContent(blog.likes)
     expect(p).toHaveTextContent(blog.user.name)
+  })
+
+  test('click like twice, and updateHandler is called twice', async () => {
+    const user = userEvent.setup()
+    const viewButton = screen.getByText('view')
+    await user.click(viewButton)
+
+    const likeButton = screen.getByText('like')
+    await user.click(likeButton)
+    await user.click(likeButton)
+
+    expect(mockHandleUpdate.mock.calls).toHaveLength(2)
   })
 })
