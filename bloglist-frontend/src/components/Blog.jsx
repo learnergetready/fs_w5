@@ -7,13 +7,13 @@ const Blog = ({ blog, updateBlog, username, removeBlog }) => {
     borderStyle: 'solid',
     borderRadius: '5px',
     padding: '10px',
-    marginBottom: '2px',
+    marginBottom: '2px'
   }
   const smallBlogStyle = {
     borderStyle: 'solid',
     borderRadius: '1px',
     padding: '3px',
-    marginBottom: '2px',
+    marginBottom: '2px'
   }
 
   const buttonStyle = { marginLeft: '6px' }
@@ -31,7 +31,7 @@ const Blog = ({ blog, updateBlog, username, removeBlog }) => {
 
   if(showMuch) {
     return(
-      <div style={bigBlogStyle}>
+      <p className='blog' style={bigBlogStyle}>
         title: {blog.title}
         <button style={buttonStyle} onClick={() => setShowMuch(false)}>hide</button><br/>
         author: {blog.author}<br/>
@@ -40,15 +40,15 @@ const Blog = ({ blog, updateBlog, username, removeBlog }) => {
         <button style={buttonStyle} onClick={handleLike}>like</button><br/>
         added by: {blog.user.name}<br/>
         {username === blog.user.username && <button onClick={handleRemove}>remove</button>}
-      </div>
+      </p>
     )
   }
 
   return(
-    <div style={smallBlogStyle}>
+    <p className='blog' style={smallBlogStyle}>
       {blog.title} {blog.author}
       <button style={buttonStyle} onClick={() => setShowMuch(true)}>view</button>
-    </div>
+    </p>
   )}
 
 Blog.propTypes = {
