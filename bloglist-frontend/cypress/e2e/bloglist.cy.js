@@ -4,6 +4,12 @@ const user = {
   password: 'sekret'
 }
 
+const user2 = {
+  name: 'Please Testme',
+  username: 'wootwoot',
+  password: 'mypassword'
+}
+
 const blog = {
   title: 'The Ultimate Blog',
   author: 'Teh Ultimate Poaster',
@@ -14,6 +20,7 @@ describe('Blog app', function() {
   beforeEach(function() {
     cy.request('POST', 'http://localhost:3001/api/testing/reset')
     cy.request('POST', 'http://localhost:3001/api/users/', user)
+    cy.request('POST', 'http://localhost:3001/api/users/', user2)
     cy.visit('http://localhost:5173')
   })
 
@@ -97,6 +104,22 @@ describe('Blog app', function() {
         cy.get('[data-cy="remove"]').click()
 
         cy.get('.blog').should('not.exist') //because it was the only blog
+      })
+
+      describe('And logged in with as a different user', function() {
+        beforeEach(function(){
+          cy.get('[data-cy="log out"]').click()
+          cy.visit('http://localhost:5173')
+
+          cy.get('[data-cy="username"]').type(user2.username)
+          cy.get('[data-cy="password"]').type(user2.password)
+          cy.get('[data-cy="login"]').click()
+        })
+
+        it('Remove button is not showing, when another user created the blog', function() {
+          cy.get('[data-cy="view"]').click()
+          cy.get('[data-cy="remove"]').should('not.exist')
+        })
       })
     })
   })
