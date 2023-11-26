@@ -8,7 +8,8 @@
     "dev": "NODE_ENV=development nodemon index.js",
     "build:ui": "rm -rf dist && cd ../bloglist-frontend/ && npm run build && cp -r dist ../bloglist-backend",
     "start": "NODE_ENV=production node index.js",
-    "lint": "eslint ."
+    "lint": "eslint .",
+    "start:test": "NODE_ENV=test node index.js"
   },
   "author": "Learner Getready",
   "license": "ISC",

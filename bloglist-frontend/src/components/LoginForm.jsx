@@ -8,6 +8,7 @@ const LoginForm = ({ handleLogin, username, setUsername, password, setPassword }
       <div>
             username
         <input
+          data-cy='username'
           type='text'
           value={username}
           name='Username'
@@ -17,13 +18,14 @@ const LoginForm = ({ handleLogin, username, setUsername, password, setPassword }
       <div>
             password
         <input
+          data-cy='password'
           type='password'
           value={password}
           name='Password'
           onChange={({ target }) => setPassword(target.value)}
         />
       </div>
-      <button type='submit'>login</button>
+      <button type='submit' data-cy='login'>login</button>
     </form>
   </div>
 )
