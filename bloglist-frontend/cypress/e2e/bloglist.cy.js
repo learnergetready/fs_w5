@@ -106,6 +106,37 @@ describe('Blog app', function() {
         cy.get('.blog').should('not.exist') //because it was the only blog
       })
 
+      it('5.23 The blogs are sorted by likes', function() {
+        cy.get('[data-cy="new blog"]').click()
+        cy.get('[data-cy="blog-title"]').type('Second blog title')
+        cy.get('[data-cy="blog-author"]').type('Second blog author')
+        cy.get('[data-cy="blog-url"]').type('Second blog url')
+        cy.get('[data-cy="submit-blog"]').click()
+        cy.get('.blog').contains('Second blog title')
+        cy.get('[data-cy="view"]').eq(0).click()
+        cy.get('[data-cy="view"]').click()
+
+        cy.get('.blog').contains(blog.title).as('blog1').find('[data-cy="like"]').as('like1')
+        cy.get('.blog').contains('Second blog title').as('blog2').find('[data-cy="like"]').as('like2')
+
+        cy.get('@like2').click()
+
+        cy.get('.blog').eq(0).should('contain','Second blog title')
+
+        cy.get('@like1').click()
+        cy.get('@blog1').should('contain', 'likes: 1')
+        cy.get('@like1').click()
+        cy.get('@blog1').should('contain', 'likes: 2')
+        cy.get('@like1').click()
+        cy.get('@blog1').should('contain', 'likes: 3')
+
+        cy.get('.blog').eq(0).should('contain',blog.title)
+        cy.get('@like2').click()
+        cy.get('@blog2').should('contain', 'likes: 2')
+        cy.get('.blog').eq(0).should('contain',blog.title)
+        cy.get('.blog').eq(1).should('contain','Second blog title')
+      })
+
       describe('And logged in with as a different user', function() {
         beforeEach(function(){
           cy.get('[data-cy="log out"]').click()
