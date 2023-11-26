@@ -91,6 +91,13 @@ describe('Blog app', function() {
           .contains(blog.author)
           .contains('likes: 1')
       })
+
+      it('A blog can be removed by the user, who added it', function() {
+        cy.get('[data-cy="view"]').click()
+        cy.get('[data-cy="remove"]').click()
+
+        cy.get('.blog').should('not.exist') //because it was the only blog
+      })
     })
   })
 })
