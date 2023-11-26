@@ -77,7 +77,7 @@ const App = () => {
     <div>
       {notification && <Notification message={notification} color={notificationColor}/> }
       {!user && <LoginForm handleLogin={handleLogin} username={username} setUsername={setUsername} password={password} setPassword={setPassword}/> }
-      {user && <p>{user.name} logged in <button onClick={handleLogout}>log out</button></p> }
+      {user && <p>{user.name} logged in <button onClick={handleLogout} data-cy='log out'>log out</button></p> }
       {user && <BlogForm sendBlog={addBlog} showNotification={showNotification} />}
       <div>
         {user && blogs.sort((a, b) => b.likes - a.likes).map(blog => <Blog key={blog.id} blog={blog} updateBlog={updateBlog} username={user.username} removeBlog={removeBlog} />) }

@@ -27,7 +27,7 @@ const BlogForm = ({ sendBlog, showNotification }) => {
 
   return(
     <>
-      <button style={hideWhenVisible} onClick={() => setVisiblePost(true)}>new blog</button>
+      <button style={hideWhenVisible} onClick={() => setVisiblePost(true)} data-cy='new blog'>new blog</button>
       <div style={showWhenVisible}>
         <h2>Create new</h2>
 
