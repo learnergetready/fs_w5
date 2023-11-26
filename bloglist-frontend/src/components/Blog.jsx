@@ -37,9 +37,9 @@ const Blog = ({ blog, updateBlog, username, removeBlog }) => {
         author: {blog.author}<br/>
         url: {blog.url}<br/>
         likes: {blog.likes}
-        <button style={buttonStyle} onClick={handleLike}>like</button><br/>
+        <button style={buttonStyle} onClick={handleLike} data-cy='like'>like</button><br/>
         added by: {blog.user.name}<br/>
-        {username === blog.user.username && <button onClick={handleRemove}>remove</button>}
+        {username === blog.user.username && <button onClick={handleRemove} data-cy='remove'>remove</button>}
       </p>
     )
   }
@@ -47,7 +47,7 @@ const Blog = ({ blog, updateBlog, username, removeBlog }) => {
   return(
     <p className='blog' style={smallBlogStyle}>
       {blog.title} {blog.author}
-      <button style={buttonStyle} onClick={() => setShowMuch(true)}>view</button>
+      <button style={buttonStyle} onClick={() => setShowMuch(true)} data-cy='view'>view</button>
     </p>
   )}
 

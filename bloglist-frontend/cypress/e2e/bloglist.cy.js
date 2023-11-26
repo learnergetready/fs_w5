@@ -69,5 +69,28 @@ describe('Blog app', function() {
         .contains(blog.title)
         .contains(blog.author)
     })
+
+    describe('When blog added', function() {
+      beforeEach(function() {
+        cy.get('[data-cy="new blog"]').click()
+        cy.get('[data-cy="blog-title"]').type(blog.title)
+        cy.get('[data-cy="blog-author"]').type(blog.author)
+        cy.get('[data-cy="blog-url"]').type(blog.url)
+        cy.get('[data-cy="submit-blog"]').click()
+      })
+
+      it('A blog can be liked', function() {
+        cy.get('.blog')
+          .contains(blog.title)
+          .contains(blog.author)
+        cy.get('[data-cy="view"]').click()
+        cy.get('[data-cy="like"]').click()
+
+        cy.get('.blog')
+          .contains(blog.title)
+          .contains(blog.author)
+          .contains('likes: 1')
+      })
+    })
   })
 })
