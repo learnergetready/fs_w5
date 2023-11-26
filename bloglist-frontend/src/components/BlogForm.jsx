@@ -40,6 +40,7 @@ const BlogForm = ({ sendBlog, showNotification }) => {
               value={title}
               name='Title'
               onChange={({ target }) => setTitle(target.value)}
+              data-cy='blog-title'
             />
           </div>
           <div>
@@ -50,6 +51,7 @@ const BlogForm = ({ sendBlog, showNotification }) => {
               value={author}
               name='Author'
               onChange={({ target }) => setAuthor(target.value)}
+              data-cy='blog-author'
             />
           </div>
           <div>
@@ -60,9 +62,10 @@ const BlogForm = ({ sendBlog, showNotification }) => {
               value={url}
               name='Url'
               onChange={({ target }) => setUrl(target.value)}
+              data-cy='blog-url'
             />
           </div>
-          <button type='submit'>post</button>
+          <button type='submit' data-cy='submit-blog'>post</button>
         </form>
         <button onClick={() => setVisiblePost(false)}>cancel</button>
       </div>
